@@ -1,10 +1,10 @@
 import dotenv from 'dotenv';
 
-import { Config } from './types/config';
+import { IConfig } from './types';
 
 dotenv.config();
 
-const config: Config = {
+const config: IConfig = {
   port: Number(process.env.PORT) || 3000,
   nodeEnv: process.env.NODE_ENV || 'development',
 };
