@@ -6,10 +6,12 @@
       "use": "@vercel/node"
     }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/dist/server/index.js"
+      "src": "/(.*)",
+      "dest": "/dist/server/index.js"
     }
-  ]
+  ],
+  "installCommand": "yarn install",
+  "buildCommand": "yarn vercel-build"
 }
