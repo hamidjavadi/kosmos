@@ -7,7 +7,6 @@
     "start": "node dist/server.js",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server/index.ts",
     "build": "tsc --build",
-    "vercel-build": "yarn install && yarn build",
     "format": "prettier --write .",
     "format-check": "prettier --check ."
   },
