@@ -1,4 +1,7 @@
 export interface IConfig {
   port: number;
-  nodeEnv: string;
+  nodeEnv: NodeENV | undefined;
+  mongodbConnectionString: string | undefined;
 }
+
+export type NodeENV = 'development' | 'production';

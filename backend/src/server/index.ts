@@ -1,7 +1,10 @@
+import mongoose, { now } from 'mongoose';
+
 import { json } from 'express';
 import express from 'express';
 
 import config from '../config';
+import PictureOfTheDay from '../database/models/PictureOfDay';
 import logger from '../helpers/logger.helper';
 import corsMiddleware from '../middleware/cors.middleware';
 import globalErrorHandler from '../middleware/globalErrorHandler.middleware';
@@ -15,16 +18,23 @@ server.use(corsMiddleware);
 server.use(httpLogger);
 server.use(routes);
 
-server.use(globalErrorHandler);
+if (config.nodeEnv === 'development') {
+  server.use(globalErrorHandler);
+}
 
 process.on('unhandledRejection', (error) => {
   logger.error({ err: error }, 'An unhandled error occurred');
 });
 
 process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception thrown:', err);
+  logger.info(`Uncaught Exception thrown: ${err.message}`);
   process.exit(1);
 });
+
+mongoose
+  .connect(config.mongodbConnectionString as string)
+  .then(() => logger.info('Database: is connected'))
+  .catch((error: { message: string }) => logger.error(error.message));
 
 server.listen(config.port, () => {
   logger.info(`Server is running on http://localhost:${config.port}`);
