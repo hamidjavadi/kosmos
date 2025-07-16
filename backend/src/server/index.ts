@@ -4,18 +4,21 @@ import { json } from 'express';
 import express from 'express';
 
 import config from '../config';
-import PictureOfTheDay from '../database/models/PictureOfDay';
 import logger from '../helpers/logger.helper';
 import corsMiddleware from '../middleware/cors.middleware';
-import globalErrorHandler from '../middleware/globalErrorHandler.middleware';
-import httpLogger from '../middleware/httpLogger.middleware';
+import globalErrorHandler from '../middleware/global-error-handler.middleware';
+import httpLogger from '../middleware/http-logger.middleware';
 import routes from '../routes/index';
 
 const server = express();
 
 server.use(json());
 server.use(corsMiddleware);
-server.use(httpLogger);
+
+if (config.nodeEnv === 'development') {
+  server.use(httpLogger);
+}
+
 server.use(routes);
 
 if (config.nodeEnv === 'development') {
