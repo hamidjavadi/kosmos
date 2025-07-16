@@ -3,9 +3,9 @@ import mongoose, { Types } from 'mongoose';
 export interface IPodRecord {
   id: Types.ObjectId;
   title: string;
-  explanation: String;
+  explanation: string;
   date: string;
-  image: String;
+  image: string;
 }
 
 const pictureOfTheDaySchema = new mongoose.Schema<IPodRecord>({

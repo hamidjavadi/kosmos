@@ -1,0 +1,88 @@
+#!/bin/sh
+# ┌──────────────────────────────────────────────────────────┐
+# │                 Husky Pre-Commit Hook                    │
+# │           🚦 Frontend + Backend Format and Test Guardian │
+# └──────────────────────────────────────────────────────────┘
+
+# Colors & Styles
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
+NC='\033[0m' # No Color
+BOLD='\033[1m'
+DIM='\033[2m'
+
+# Symbols
+CHECK="✅"
+CROSS="❌"
+ROCKET="🚀"
+TIME="⏱️"
+DIVIDER="──────────────────────────────────────────────────────────"
+
+# Timestamp
+echo "\n${DIM}$(date +"%T") ${BOLD}${MAGENTA}Husky:${NC} Preparing commit...${NC}"
+
+# ─── Frontend Code Quality ──────────────────────────────────────
+echo "\n${BLUE}${DIVIDER}${NC}"
+echo "${BOLD}${YELLOW}${ROCKET} Checking Frontend Code Quality ...${NC}"
+
+if ! npm run lint:frontend; then
+  echo "\n${BOLD}${RED}${CROSS} Checking Frontend Code Quality Failed!${NC}"
+  echo "${DIM}${RED}Tip: Run ${BOLD}npm run lint:frontend${NC}${DIM}${RED} to debug.${NC}"
+  echo "${BLUE}${DIVIDER}${NC}\n"
+  exit 1
+fi
+
+echo "\n${BOLD}${GREEN}${CHECK} Checking Frontend Code Quality Done! ${NC}${DIM}${TIME} $(date +"%T")${NC}"
+echo "${BLUE}${DIVIDER}${NC}\n"
+
+# ─── Backend Code Quality ──────────────────────────────────────
+echo "\n${BLUE}${DIVIDER}${NC}"
+echo "${BOLD}${YELLOW}${ROCKET} Checking Backend Code Quality ...${NC}"
+
+if ! npm run lint:backend; then
+  echo "\n${BOLD}${RED}${CROSS} Checking Backend Code Quality Failed!${NC}"
+  echo "${DIM}${RED}Tip: Run ${BOLD}npm run lint:backend${NC}${DIM}${RED} to debug.${NC}"
+  echo "${BLUE}${DIVIDER}${NC}\n"
+  exit 1
+fi
+
+echo "\n${BOLD}${GREEN}${CHECK} Checking Backend Code Quality Done! ${NC}${DIM}${TIME} $(date +"%T")${NC}"
+echo "${BLUE}${DIVIDER}${NC}\n"
+
+# ─── Frontend Format ──────────────────────────────────────
+echo "\n${BLUE}${DIVIDER}${NC}"
+echo "${BOLD}${YELLOW}${ROCKET} Checking Frontend Format ...${NC}"
+
+if ! npm run format:check:frontend; then
+  echo "\n${BOLD}${RED}${CROSS} Checking Frontend Format Failed!${NC}"
+  echo "${DIM}${RED}Tip: Run ${BOLD}npm run format:check:frontend${NC}${DIM}${RED} to debug.${NC}"
+  echo "${BLUE}${DIVIDER}${NC}\n"
+  exit 1
+fi
+
+echo "\n${BOLD}${GREEN}${CHECK} Checking Frontend Format Done! ${NC}${DIM}${TIME} $(date +"%T")${NC}"
+echo "${BLUE}${DIVIDER}${NC}\n"
+
+# ─── Backend Format ──────────────────────────────────────
+echo "\n${BLUE}${DIVIDER}${NC}"
+echo "${BOLD}${YELLOW}${ROCKET} Checking Backend Format ...${NC}"
+
+if ! npm run format:check:backend; then
+  echo "\n${BOLD}${RED}${CROSS} Checking Backend Format Failed!${NC}"
+  echo "${DIM}${RED}Tip: Run ${BOLD}npm run format:check:backend${NC}${DIM}${RED} to debug.${NC}"
+  echo "${BLUE}${DIVIDER}${NC}\n"
+  exit 1
+fi
+
+echo "\n${BOLD}${GREEN}${CHECK} Checking Backend Format Done! ${NC}${DIM}${TIME} $(date +"%T")${NC}"
+echo "${BLUE}${DIVIDER}${NC}\n"
+
+echo "\n${BOLD}${GREEN}${CHECK} Backend Tests Passed! ${NC}${DIM}${TIME} $(date +"%T")${NC}"
+echo "${BLUE}${DIVIDER}${NC}\n"
+
+# ─── Success ─────────────────────────────────────────────
+echo "${BOLD}${GREEN}🎉  All tests passed!${NC} ${DIM}Committing changes...${NC}\n"
+exit 0

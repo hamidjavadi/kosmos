@@ -15,14 +15,14 @@ export async function getNasaPOD(): Promise<INasaPodApiResponse | null> {
     }
 
     return (await apiResponse.json()) as INasaPodApiResponse;
-  } catch (error) {
+  } catch {
     return null;
   }
 }
 
 export interface INasaPodApiResponse {
   title: string;
-  explanation: String;
+  explanation: string;
   date: string;
-  url: String;
+  url: string;
 }

@@ -1,0 +1,28 @@
+{
+  "name": "nasa-explorer",
+  "version": "1.0.0",
+  "description": "A web application to show data about the space and earth collected by NASA",
+  "main": "",
+  "scripts": {
+    "lint": "npm run lint:frontend && npm run lint:backend",
+    "format": "npm run format:frontend && npm run format:backend",
+    "format:check": "npm run format:check:frontend && npm run format:check:backend",
+    "format:check:frontend": "cd frontend && npm run format:check",
+    "format:check:backend": "cd backend && npm run format:check",
+    "format:frontend": "cd frontend && npm run format",
+    "format:backend": "cd backend && npm run format",
+    "lint:frontend": "cd frontend && npm run lint",
+    "lint:backend": "cd backend && npm run lint",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hamidjavadi/nasa-explorer.git"
+  },
+  "author": "Hamid Javadi",
+  "license": "ISC",
+  "homepage": "https://github.com/hamidjavadi/nasa-explorer#readme",
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}

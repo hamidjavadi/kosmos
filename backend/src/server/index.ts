@@ -1,4 +1,4 @@
-import mongoose, { now } from 'mongoose';
+import mongoose from 'mongoose';
 
 import { json } from 'express';
 import express from 'express';
