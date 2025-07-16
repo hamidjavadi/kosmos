@@ -4,8 +4,30 @@ import {
   IPodRecord,
   PictureOfTheDayModel,
 } from '../database/models/picture-of-the-day.model';
-import { INasaPodApiResponse, getNasaPOD } from '../service/get-pod.service';
+import { getNasaPOD } from '../service/get-pod.service';
 import { IApiResponse } from '../types/api.type';
+
+const formatPodRecord = (record: IPodRecord): IPodRecord => ({
+  id: record.id,
+  date: record.date as string,
+  explanation: record.explanation as string,
+  image: record.image as string,
+  title: record.title as string,
+});
+
+const fetchAndSaveNasaPod = async (): Promise<IPodRecord | null> => {
+  const response = await getNasaPOD();
+  if (!response) return null;
+
+  const picture = await PictureOfTheDayModel.create({
+    date: response.date,
+    explanation: response.explanation,
+    image: response.url,
+    title: response.title,
+  });
+
+  return formatPodRecord(picture);
+};
 
 export const pictureOfTheDayController = async (
   req: Request,
@@ -13,72 +35,35 @@ export const pictureOfTheDayController = async (
   next: NextFunction,
 ) => {
   try {
-    const todayDate = new Date();
-    const todayFormattedDate = todayDate.toISOString().split('T')[0];
-    const pictures: IPodRecord[] = await PictureOfTheDayModel.aggregate([
+    const todayDate = new Date().toISOString().split('T')[0];
+
+    // Try to get the latest picture from DB
+    const [latestPicture] = await PictureOfTheDayModel.aggregate([
       { $sort: { date: -1 } },
       { $limit: 1 },
     ]);
 
-    if (pictures.length) {
-      const todayPicture = pictures.find(
-        (item) => item.date === todayFormattedDate,
-      );
-
-      if (todayPicture) {
-        return res.status(200).json(todayPicture);
-      }
-
-      const response: INasaPodApiResponse | null = await getNasaPOD();
-
-      if (response) {
-        const picture = await PictureOfTheDayModel.create({
-          date: response.date,
-          explanation: response.explanation,
-          image: response.url,
-          title: response.title,
-        });
-
-        const result: IPodRecord = {
-          id: picture.id,
-          date: picture.date as string,
-          explanation: picture.explanation as string,
-          image: picture.image as string,
-          title: picture.title as string,
-        };
-
-        return res.status(200).json(result);
-      }
-
-      return res.status(200).json(pictures[0]);
+    // If we have today's picture in DB, return it
+    if (latestPicture?.date === todayDate) {
+      return res.status(200).json(formatPodRecord(latestPicture));
     }
 
-    if (!pictures.length) {
-      const response: INasaPodApiResponse | null = await getNasaPOD();
+    // Otherwise fetch from NASA API
+    const nasaPod = await fetchAndSaveNasaPod();
 
-      if (response) {
-        const picture = await PictureOfTheDayModel.create({
-          date: response.date,
-          explanation: response.explanation,
-          image: response.url,
-          title: response.title,
-        });
-
-        const result: IPodRecord = {
-          id: picture.id,
-          date: picture.date as string,
-          explanation: picture.explanation as string,
-          image: picture.image as string,
-          title: picture.title as string,
-        };
-
-        return res.status(200).json(result);
-      }
-
-      return res.status(404).json({
-        error: 'Picture of the day not found!',
-      });
+    if (nasaPod) {
+      return res.status(200).json(nasaPod);
     }
+
+    // Fallback to latest picture if available
+    if (latestPicture) {
+      return res.status(200).json(formatPodRecord(latestPicture));
+    }
+
+    // No pictures available at all
+    return res.status(404).json({
+      error: 'Picture of the day not found!',
+    });
   } catch (error) {
     next(error);
   }
