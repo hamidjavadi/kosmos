@@ -14,15 +14,11 @@ const server = express();
 
 server.use(json());
 server.use(corsMiddleware);
+server.use(routes);
+server.use(globalErrorHandler);
 
 if (config.nodeEnv === 'development') {
   server.use(httpLogger);
-}
-
-server.use(routes);
-
-if (config.nodeEnv === 'development') {
-  server.use(globalErrorHandler);
 }
 
 process.on('unhandledRejection', (error) => {
