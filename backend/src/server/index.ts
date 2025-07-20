@@ -19,11 +19,8 @@ if (config.nodeEnv === 'development') {
   server.use(httpLogger);
 }
 
+server.use(globalErrorHandler);
 server.use(routes);
-
-if (config.nodeEnv === 'development') {
-  server.use(globalErrorHandler);
-}
 
 process.on('unhandledRejection', (error) => {
   logger.error({ err: error }, 'An unhandled error occurred');
