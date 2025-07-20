@@ -4,6 +4,9 @@
   "description": "A web application to show data about the space and earth collected by NASA",
   "main": "",
   "scripts": {
+    "dev": "npm run dev:frontend & npm run dev:backend",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
     "lint": "npm run lint:frontend && npm run lint:backend",
     "format": "npm run format:frontend && npm run format:backend",
     "format:check": "npm run format:check:frontend && npm run format:check:backend",

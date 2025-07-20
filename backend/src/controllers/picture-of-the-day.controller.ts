@@ -5,7 +5,7 @@ import {
   PictureOfTheDayModel,
 } from '../database/models/picture-of-the-day.model';
 import { getNasaPOD } from '../service/get-pod.service';
-import { IApiResponse } from '../types/api.type';
+import { IApiRequest, IApiResponse } from '../types/api.type';
 
 const formatPodRecord = (record: IPodRecord): IPodRecord => ({
   id: record.id,
@@ -14,6 +14,9 @@ const formatPodRecord = (record: IPodRecord): IPodRecord => ({
   image: record.image as string,
   title: record.title as string,
 });
+
+const formatPodRecords = (records: IPodRecord[]): IPodRecord[] =>
+  records.map(formatPodRecord);
 
 const fetchAndSaveNasaPod = async (): Promise<IPodRecord | null> => {
   const response = await getNasaPOD();
@@ -64,6 +67,26 @@ export const pictureOfTheDayController = async (
     return res.status(404).json({
       error: 'Picture of the day not found!',
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const pictureOfTheDayHistoryController = async (
+  req: IApiRequest<{
+    count?: number;
+  }>,
+  res: IApiResponse<IPodRecord[]>,
+  next: NextFunction,
+) => {
+  try {
+    // Try to get latest pictures from DB
+    const pictures = await PictureOfTheDayModel.aggregate([
+      { $sort: { date: -1 } },
+      { $limit: req.query.count || 10 },
+    ]);
+
+    return res.status(200).json(formatPodRecords(pictures));
   } catch (error) {
     next(error);
   }
