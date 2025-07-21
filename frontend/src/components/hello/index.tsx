@@ -9,7 +9,7 @@ const Hello = () => {
   });
 
   return (
-    <div className="flex flex-col justify-center items-center h-dvh align-middle">
+    <div className="flex flex-col justify-center items-center dark:bg-black h-dvh align-middle">
       <h1>NASA Explorer</h1>
       {data && <p>{data.message}</p>}
       {(isPending || isFetching) && <p>Loading...</p>}

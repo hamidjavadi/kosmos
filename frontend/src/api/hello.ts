@@ -1,8 +1,5 @@
-import config from '../config';
-
-interface ApiResponse {
-  message: string;
-}
+import config from '@/config';
+import type { ApiResponse } from '@/types/api.type';
 
 const getHello = async (): Promise<ApiResponse> => {
   try {
