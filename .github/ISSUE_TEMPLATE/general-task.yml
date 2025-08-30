@@ -1,0 +1,60 @@
+name: 🗂 General Task
+description: Template for new features, chores, or other project work.
+title: "Task: [Short, Descriptive Title]"
+labels: ["task"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # General Task
+        Please fill out the details below to create a new task.
+  - type: textarea
+    id: description
+    attributes:
+      label: "Description"
+      description: "What is the goal of this task? Provide a clear, concise description."
+      placeholder: "As a [user], I want to [action], so that [benefit]."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: "Acceptance Criteria (How do we know it's done?)"
+      description: "List the measurable conditions that must be met for this task to be complete."
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] Criterion 3
+    validations:
+      required: true
+  - type: textarea
+    id: implementation_notes
+    attributes:
+      label: "Implementation Notes / Steps to Reproduce"
+      description: "For features: add technical notes. For bugs: list steps to see the error."
+      placeholder: |
+        1. Step one...
+        2. Step two...
+  - type: input
+    id: dependencies
+    attributes:
+      label: "Dependencies (Blocked by)"
+      description: "List the issue numbers (#123) that this task depends on."
+      placeholder: "#123, #456"
+  - type: input
+    id: resources
+    attributes:
+      label: "Resources Needed"
+      description: "e.g., Budget approval, access to software, specific team member"
+      placeholder: "Design assets, API keys, etc."
+  - type: input
+    id: stakeholders
+    attributes:
+      label: "Stakeholders"
+      description: "Names of people who need to be informed or approve"
+      placeholder: "@username1, @username2"
+  - type: markdown
+    attributes:
+      value: |
+        **Links & Attachments**
+        Please add any relevant links (Figma, documents, etc.) in a comment after creating the issue.
