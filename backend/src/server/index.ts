@@ -12,6 +12,7 @@ import configRouter from '@/routes/index';
 
 const server: Express = express();
 
+server.use(express.static('../public'));
 server.use(json());
 server.use(corsMiddleware);
 
