@@ -10,4 +10,21 @@ export interface IConfig {
   mongodbConnectionString: string | undefined;
   apis?: IApis;
   nasaAPIKey?: string;
+  swagger: {
+    definition: {
+      openapi: string;
+      info: {
+        title: string;
+        version: string;
+        description: string;
+      };
+      servers: [
+        {
+          url: string;
+          description: string;
+        },
+      ];
+    };
+    apis: string[];
+  };
 }

@@ -1,7 +1,7 @@
 import pino from 'pino';
 import pinoHttp from 'pino-http';
 
-import logger from '../helpers/logger.helper';
+import logger from '@/helpers/logger.helper';
 
 const httpLoggerMiddleware = pinoHttp({
   logger,
