@@ -1,17 +1,18 @@
 import mongoose from 'mongoose';
 
 import { json } from 'express';
-import express from 'express';
+import express, { Express } from 'express';
 
 import config from '../config';
 import logger from '../helpers/logger.helper';
 import corsMiddleware from '../middleware/cors.middleware';
 import globalErrorHandler from '../middleware/global-error-handler.middleware';
 import httpLogger from '../middleware/http-logger.middleware';
-import routes from '../routes/index';
+import configRouter from '../routes/index';
 
-const server = express();
+const server: Express = express();
 
+server.use(express.static('../public'));
 server.use(json());
 server.use(corsMiddleware);
 
@@ -20,7 +21,7 @@ if (config.nodeEnv === 'development') {
 }
 
 server.use(globalErrorHandler);
-server.use(routes);
+configRouter(server);
 
 process.on('unhandledRejection', (error) => {
   logger.error({ err: error }, 'An unhandled error occurred');

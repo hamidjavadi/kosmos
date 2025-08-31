@@ -1,9 +1,6 @@
 import { NextFunction, Request } from 'express';
 
-import {
-  IPodRecord,
-  PictureOfTheDayModel,
-} from '../database/models/picture-of-the-day.model';
+import { IPodRecord, PodModel } from '../database/models/pod.model';
 import { getNasaPOD } from '../service/get-pod.service';
 import { IApiRequest, IApiResponse } from '../types/api.type';
 
@@ -22,7 +19,7 @@ const fetchAndSaveNasaPod = async (): Promise<IPodRecord | null> => {
   const response = await getNasaPOD();
   if (!response) return null;
 
-  const picture = await PictureOfTheDayModel.create({
+  const picture = await PodModel.create({
     date: response.date,
     explanation: response.explanation,
     image: response.url,
@@ -32,7 +29,7 @@ const fetchAndSaveNasaPod = async (): Promise<IPodRecord | null> => {
   return formatPodRecord(picture);
 };
 
-export const pictureOfTheDayController = async (
+export const PodController = async (
   req: Request,
   res: IApiResponse<IPodRecord>,
   next: NextFunction,
@@ -41,7 +38,7 @@ export const pictureOfTheDayController = async (
     const todayDate = new Date().toISOString().split('T')[0];
 
     // Try to get the latest picture from DB
-    const [latestPicture] = await PictureOfTheDayModel.aggregate([
+    const [latestPicture] = await PodModel.aggregate([
       { $sort: { date: -1 } },
       { $limit: 1 },
     ]);
@@ -72,7 +69,7 @@ export const pictureOfTheDayController = async (
   }
 };
 
-export const pictureOfTheDayHistoryController = async (
+export const PodHistoryController = async (
   req: IApiRequest<{
     count?: number;
   }>,
@@ -81,9 +78,9 @@ export const pictureOfTheDayHistoryController = async (
 ) => {
   try {
     // Try to get latest pictures from DB
-    const pictures = await PictureOfTheDayModel.aggregate([
+    const pictures = await PodModel.aggregate([
       { $sort: { date: -1 } },
-      { $limit: req.query.count || 10 },
+      { $limit: Number(req.query.count || 10) },
     ]);
 
     return res.status(200).json(formatPodRecords(pictures));

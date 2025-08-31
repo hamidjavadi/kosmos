@@ -1,3 +1,5 @@
+import path from 'path';
+
 import { NextFunction, Request, Response } from 'express';
 
 export const homeController = (
@@ -6,10 +8,7 @@ export const homeController = (
   next: NextFunction,
 ) => {
   try {
-    const response = {
-      message: 'hello',
-    };
-    res.json(response);
+    return res.sendFile(path.join(__dirname, '../public', 'index.html'));
   } catch (error) {
     next(error);
   }

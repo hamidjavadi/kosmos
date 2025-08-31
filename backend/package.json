@@ -4,8 +4,8 @@
   "description": "API for NASA explorer",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/server.js",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server/index.ts",
+    "start": "node dist/server/index.js",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node-dev -r tsconfig-paths/register' src/server/index.ts",
     "build": "tsc --build",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -17,7 +17,9 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
-    "mongoose": "^8.16.3"
+    "mongoose": "^8.16.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.31.0",
@@ -25,6 +27,8 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.13",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "eslint": "^9.31.0",
     "globals": "^16.3.0",
     "nodemon": "^3.1.10",
@@ -33,6 +37,8 @@
     "pino-pretty": "^13.0.0",
     "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.37.0"
   }

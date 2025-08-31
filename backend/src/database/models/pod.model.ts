@@ -8,7 +8,7 @@ export interface IPodRecord {
   image: string;
 }
 
-const pictureOfTheDaySchema = new mongoose.Schema<IPodRecord>({
+const PodModelSchema = new mongoose.Schema<IPodRecord>({
   id: Types.ObjectId,
   title: String,
   explanation: String,
@@ -16,7 +16,4 @@ const pictureOfTheDaySchema = new mongoose.Schema<IPodRecord>({
   image: String,
 });
 
-export const PictureOfTheDayModel = mongoose.model(
-  'picture_of_the_day',
-  pictureOfTheDaySchema,
-);
+export const PodModel = mongoose.model('picture_of_the_day', PodModelSchema);

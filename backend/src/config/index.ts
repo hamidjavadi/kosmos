@@ -12,6 +12,23 @@ const config: IConfig = {
   apis: {
     POD: 'https://api.nasa.gov/planetary/apod',
   },
+  swagger: {
+    definition: {
+      openapi: '3.0.0',
+      info: {
+        title: 'KOSMOS',
+        version: '1.0.0',
+        description: 'Kosmos API Documentation',
+      },
+      servers: [
+        {
+          url: process.env.SWAGGER_SERVER || '',
+          description: 'Development server',
+        },
+      ],
+    },
+    apis: ['./src/routes/api/**/*.ts'],
+  },
 };
 
 export default config;

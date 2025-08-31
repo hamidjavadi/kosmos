@@ -1,18 +1,26 @@
-import { Router } from 'express';
+import path from 'path';
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 
-import { homeController } from '../controllers/home.controller';
-import {
-  pictureOfTheDayController,
-  pictureOfTheDayHistoryController,
-} from '../controllers/picture-of-the-day.controller';
+import express, { Express } from 'express';
 
-const router = Router();
+import config from '../config';
+import podRoutes from '../routes/api/v1/pod.routes';
+import homeRoutes from '../routes/home';
 
-router.get('/', homeController);
-router.get('/api/v1/picture-of-the-day', pictureOfTheDayController);
-router.get(
-  '/api/v1/picture-of-the-day-history',
-  pictureOfTheDayHistoryController,
-);
+const configRouter = (server: Express) => {
+  server.use('/', homeRoutes);
+  server.use(
+    '/assets',
+    express.static(path.join(__dirname, '../public/assets')),
+  );
+  // server.use('/css', express.static(path.join(__dirname, '../public/css')));
+  server.use('/api/v1/pod', podRoutes);
+  server.use(
+    '/api/v1/docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerJsdoc(config.swagger)),
+  );
+};
 
-export default router;
+export default configRouter;
