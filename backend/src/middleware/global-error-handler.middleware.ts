@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextFunction, Request, Response } from 'express';
 
-import logger from '@/helpers/logger.helper';
+import logger from '../helpers/logger.helper';
 
 const globalErrorHandler = (
   err: Error,

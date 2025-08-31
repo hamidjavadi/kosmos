@@ -3,7 +3,7 @@ import { Router } from 'express';
 import {
   PodController,
   PodHistoryController,
-} from '@/controllers/pod.controller';
+} from '../../../controllers/pod.controller';
 
 const router = Router();
 

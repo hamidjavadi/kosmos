@@ -1,7 +1,6 @@
 import { NextFunction, Request } from 'express';
 
-import { IPodRecord, PodModel } from '@/database/models/pod.model';
-
+import { IPodRecord, PodModel } from '../database/models/pod.model';
 import { getNasaPOD } from '../service/get-pod.service';
 import { IApiRequest, IApiResponse } from '../types/api.type';
 

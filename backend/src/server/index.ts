@@ -3,12 +3,12 @@ import mongoose from 'mongoose';
 import { json } from 'express';
 import express, { Express } from 'express';
 
-import config from '@/config';
-import logger from '@/helpers/logger.helper';
-import corsMiddleware from '@/middleware/cors.middleware';
-import globalErrorHandler from '@/middleware/global-error-handler.middleware';
-import httpLogger from '@/middleware/http-logger.middleware';
-import configRouter from '@/routes/index';
+import config from '../config';
+import logger from '../helpers/logger.helper';
+import corsMiddleware from '../middleware/cors.middleware';
+import globalErrorHandler from '../middleware/global-error-handler.middleware';
+import httpLogger from '../middleware/http-logger.middleware';
+import configRouter from '../routes/index';
 
 const server: Express = express();
 

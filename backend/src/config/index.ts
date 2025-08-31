@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 
-import { IConfig, NodeENV } from '@/types/config.type';
+import { IConfig, NodeENV } from '../types/config.type';
 
 dotenv.config();
 

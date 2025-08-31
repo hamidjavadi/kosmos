@@ -4,7 +4,7 @@
   "description": "API for NASA explorer",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/server.js",
+    "start": "node dist/server/index.js",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node-dev -r tsconfig-paths/register' src/server/index.ts",
     "build": "tsc --build",
     "format": "prettier --write .",

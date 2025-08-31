@@ -4,9 +4,9 @@ import swaggerUi from 'swagger-ui-express';
 
 import express, { Express } from 'express';
 
-import config from '@/config';
-import podRoutes from '@/routes/api/v1/pod.routes';
-import homeRoutes from '@/routes/home';
+import config from '../config';
+import podRoutes from '../routes/api/v1/pod.routes';
+import homeRoutes from '../routes/home';
 
 const configRouter = (server: Express) => {
   server.use('/', homeRoutes);
